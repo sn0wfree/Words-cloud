@@ -40,3 +40,12 @@ class shapepicture:
         else:
             pass
         return self
+
+
+class picture_scan_bound:
+    def __init__(self,txt, c,o,lang,h=False):
+        self.text = txt
+        self.color = c
+        self.highlight= h
+        self.textorientation= o
+        self.language=lang
