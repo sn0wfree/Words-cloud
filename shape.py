@@ -1,6 +1,7 @@
 
 #input txt
 from PIL import Image
+import cv2.cv as cv
 
 
 
@@ -22,11 +23,11 @@ class shapepicture:
     #picture=''
     #greyscale='grey'
     #size=0
-    def __init__(self,img,g,s):
+    def __init__(self,img):
         self.picture=img
-        self.greyscale=g
-        self.size=s
-    def shapeprocess(self):
+        self.greyscale=''
+        self.size=img.size
+    def image_reco_process(self,returnable=False):
         if self.greyscale !='grey':
             if self.picture.mode not in ('1','L','RGB','CMYK'):
                 raise Exception('That is not a recogized image mode')
@@ -39,7 +40,25 @@ class shapepicture:
                 pass
         else:
             pass
-        return self
+        if returnable:
+            return self
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class picture_scan_bound:
