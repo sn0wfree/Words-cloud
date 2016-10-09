@@ -12,6 +12,7 @@ class initial_font:
     FONT_CACHE=''
     FONT_DIR=''
 
+
     def __ini__(self):
         self.DEFAULT_FONT = DEFAULT_FONT
         self.DEFAULT_PALETTE = DEFAULT_PALETTE
@@ -20,45 +21,56 @@ class initial_font:
         self.FONT_NAME_LIST=FONT_NAME_LIST
         self.SECONDARY_FONT_LIST=SECONDARY_FONT_LIST
 
+
     def load_font_dir(self,fonts='fonts.json', fonts_dir='fonts'):
         self.FONT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)),fonts_dir)
         if os.path.isdir(self.FONT_DIR):
             self.FONT_CACHE = simplejson.load(open(os.path.join(self.FONT_DIR, fonts), 'r'))
+            self.FONT_NAME_LIST=[fonts_list['name'] for fonts_list in self.FONT_CACHE ]
+
         else:
             raise Exception('Font folder can not be revealed in the current folder')
 
-    def print_list(self,font_name,font_list = True ,all_list= False):
+    def print_list(self,all_font_list = False , print_or_not = True):
         (rows,columns)=os.popen('stty size', 'r').read().split()
-        if font_list == True or font_list == 1:
-            d=1
-            print '*'*int(columns)
-            for f in font_name:
-                if f != self.DEFAULT_FONT:
-                    print '%d) %s '%(d,f)
-                elif f == self.DEFAULT_FONT:
-                    print '%d) %s   <--'%(d,f)
-                d+=1
-            print '*'*int(columns)
-        #return (rows,columns)
-        if all_list == True or all_list == 1:
-            print '*'*int(columns)
-            print 'FONT LIST include :\n  %s  <--DEFAULT_FONT' %self.DEFAULT_FONT
-            for s in self.SECONDARY_FONT_LIST:
-                print '  %s'%s
-            print '*'*int(columns)
+        if  print_or_not == True:
+            if all_font_list == False :
+                d=1
+                print '*'*int(columns)
+                for f in self.FONT_NAME_LIST:
+                    if f != self.DEFAULT_FONT:
+                        print '%d) %s '%(d,f)
+                    elif f == self.DEFAULT_FONT:
+                        print '%d) %s   <--'%(d,f)
+                    d+=1
+                print '*'*int(columns)
+
+            #return (rows,columns)
+            elif all_font_list == True :
+                print '*'*int(columns)
+                print 'FONT LIST include :\n  %s  <--DEFAULT_FONT' %self.DEFAULT_FONT
+                for s in self.SECONDARY_FONT_LIST:
+                    print '  %s'%s
+                print '*'*int(columns)
+
+        return (self.DEFAULT_FONT,self.SECONDARY_FONT_LIST)
+            #return (rows,columns)
+
+
+
 
     def change_font(self):
         self.load_font_dir()
         print ('If you want to look the list of fonts please type: list')
         font_from_input = raw_input('''please enter the specific font as the DEFAULT_FONT,if would not change the default setting please type False or No:''')
-        font_name=[fonts_list['name'] for fonts_list in self.FONT_CACHE ]
-        self.FONT_NAME_LIST = copy.copy(font_name)
+        #font_name=[fonts_list['name'] for fonts_list in self.FONT_CACHE ]
+
         while 1:
             if font_from_input in ['False' ,'No','no','false','NO','FASLE'] :
                 return 0
             elif font_from_input == 'list':
 
-                self.print_list(font_name)
+                all_selected_font_name=self.print_list()
                 #d=1
                 #print '*'*int(columns)
                 #for f in font_name:
@@ -68,7 +80,7 @@ class initial_font:
                 #        print '%d) %s   <--'%(d,f)
                 #    d+=1
                 #print '*'*int(columns)
-            elif font_from_input in font_name:
+            elif font_from_input in self.FONT_NAME_LIST:
                 self.DEFAULT_FONT=font_from_input
                 self.DEFAULT_PALETTE = 'changed'
                 return 0
@@ -87,11 +99,11 @@ class initial_font:
             multi_fonts=raw_input('Secondary Font Name (≠ %s, divided by ","): '%self.DEFAULT_FONT)
             (rows,columns)=os.popen('stty size', 'r').read().split()
 
-            font_name=[fonts_list['name'] for fonts_list in self.FONT_CACHE ]
+            #font_name=[fonts_list['name'] for fonts_list in self.FONT_CACHE ]
             while 1:
                 if multi_fonts == 'list':# print out the list of Fonts
 
-                    self.print_list(font_name)
+                    all_selected_font_name=self.print_list()
 
                 elif multi_fonts != 'list':
                     font_list4multi_recognised=[]
@@ -144,5 +156,5 @@ if __name__=='__main__':
     #fontss_name=[fonts_list['ttf'] for fonts_list in y.FONT_CACHE ]
 
     #print y.FONT_CACHE
-    font_name=[fonts_list['name'] for fonts_list in y.FONT_CACHE ]
-    y.print_list(font_name,font_list=False ,all_list=True)
+    #font_name=[fonts_list['name'] for fonts_list in y.FONT_CACHE ]
+    printist=y.print_list(all_font_list=True)

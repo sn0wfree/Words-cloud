@@ -7,13 +7,14 @@ import simplejson
 
 
 
-def load_font_process(font_name):
-    y=initialfont.initial_font().initial_process()
-    for font in y.FONT_CACHE:
-        if font['name'] == font_name:
-            return font
-    raise AttributeError('Invalid font name. Should be one of %s' %
-                         ", ".join([f['name'] for f in FONT_CACHE]))
+def load_font_process(multi_font_feature = False):
+    y=initialfont.initial_font()
+    y.initial_process(multi_font_feature)
+    all_selected_font_name=y.print_list(1,0)
+
+
+    #raise AttributeError('Invalid font name. Should be one of %s' %
+    #                     ", ".join([f['name'] for f in FONT_CACHE]))
 
 
 
@@ -21,10 +22,14 @@ def load_font_process(font_name):
 
 
 
-def main:
+def main():
     pass
 if __name__=='__main__':
-    y=initial_font().initial_process()
+    load_font_process()
+    #y=initial_font().initial_process()
+
+
+    '''
 
     pygame.init()
 
@@ -52,4 +57,5 @@ if __name__=='__main__':
 
     LAST_COLLISON_HIT = None
 
-    FONTS = {}
+    #FONTS = {}
+    '''
