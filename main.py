@@ -1,4 +1,4 @@
-import initialfont,shape_pic
+import initialfont
 import pygame
 from pygame import transform, font, mask, Surface, Rect, SRCALPHA, draw
 import gc,os
@@ -7,10 +7,10 @@ import simplejson
 
 
 
-def load_font_process(multi_font_feature = False):
-    y=initialfont.initial_font()
-    y.initial_process(multi_font_feature)
-    all_selected_font_name=y.print_list(1,0)
+
+
+
+
 
 
     #raise AttributeError('Invalid font name. Should be one of %s' %
@@ -25,7 +25,7 @@ def load_font_process(multi_font_feature = False):
 def main():
     pass
 if __name__=='__main__':
-    load_font_process()
+    font,font_list=load_font_process()
     #y=initial_font().initial_process()
 
 
